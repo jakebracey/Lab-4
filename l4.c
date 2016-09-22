@@ -11,13 +11,19 @@
 
 int main(void) {
 	int file_sel;
-	printf("Which file would you like to open:\n");
+	char file_name[16];
+	printf("Which file would you like to open(ex. 1, 10, etc.:\n");
 	scanf("%d",&file_sel);
 	if(file_sel<1||file_sel>11){
 		while(file_sel<1||file_sel>11){
-			printf("Available files are files 1-11\nPlease enter a valid file number:\n");
+			printf("Available files are files 01-11\nPlease enter a valid file number:\n");
 			scanf("%d, &file_sel");
 		}
 	}
-
+	if(file_sel<10){
+	sprintf(file_name,"Raw_data_0%d",file_sel);
 	}
+	else{
+	sprintf(file_name,"Raw_data_%d",file_sel);	
+	}
+}
