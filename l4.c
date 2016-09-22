@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 int main(void) {
+	printf("HI");
 	int file_sel;
 	char file_name[16];
 	printf("Which file would you like to open(ex. 1, 10, etc.:\n");
@@ -26,4 +27,5 @@ int main(void) {
 	else{
 	sprintf(file_name,"Raw_data_%d",file_sel);	
 	}
+
 }
