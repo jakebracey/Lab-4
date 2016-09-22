@@ -40,6 +40,7 @@ int main(void) {
 	}
 	
 	array=load_array(file_name, length, max_val);
+	printf("Would you like to\n1:offset the original signal\n2:")
 }
 int *load_array(char* file,int* length, int* max_val){
 	FILE* fp=fopen(file,"r");
@@ -87,7 +88,7 @@ int getmax(int array[], int *length)
 	}
 	return max;
 }
-
+/*
 int write_stats(double mean, int max, )
 {
 	FILE* fp=fopen(file,"w");
@@ -101,3 +102,4 @@ int write_stats(double mean, int max, )
 
 
 }
+*/
