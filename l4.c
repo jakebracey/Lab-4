@@ -8,9 +8,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+int *load_array(char* file,int* length);
+
 
 int main(void) {
-	printf("HI");
 	int file_sel;
 	char file_name[16];
 	printf("Which file would you like to open(ex. 1, 10, etc.:\n");
@@ -28,4 +29,17 @@ int main(void) {
 	sprintf(file_name,"Raw_data_%d",file_sel);	
 	}
 
+}
+
+int *load_array(char* file,int* length){
+	FILE* fp=fopen(file,"r");
+	//opens the given input file for reading
+	
+	if(fp==NULL){//making sure the input file opens correctly
+		printf("Error opening input file");
+		return 0;
+		//terminates program
+		}
+	
+	fscanf(fp, "%d %d",);
 }
