@@ -9,9 +9,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 int *load_array(char* file,int* length, int* max_val);
-
-
-double mean(int[]);
+double getmean(int[], int*);
+int getmax(int[], int*);
+void write_stats(char[], int[], int*);
 
 int main(void) {
 	int file_sel;
@@ -20,7 +20,6 @@ int main(void) {
 	char file_name[16];
 	char stat_file[20];
 	int* array;
-	
 	
 	printf("Which file would you like to open:\n");
 	scanf("%d",&file_sel);
@@ -40,6 +39,7 @@ int main(void) {
 	}
 	
 	array=load_array(file_name, length, max_val);
+	write_stats(stat_file, array, length); //writes stats to file
 }
 int *load_array(char* file,int* length, int* max_val){
 	FILE* fp=fopen(file,"r");
@@ -63,24 +63,25 @@ int *load_array(char* file,int* length, int* max_val){
 	}
 	return array;
 }
-double getmean(int* array,int *length)
+
+double getmean(int array[],int *length)
 {
 	int i=0;
 	int add=0;
 	double mean=0;
-	for(i=0;i<*length;i++)
+	for(i=0;i<*length;i++) //adds the values in array
 	{
 		add+=array[i];
 	}
-	mean=(double)add / *length;
-	return mean;
+	mean=(double)add / *length; //devides by # of values added
+	return mean; //returns average
 }
 
 int getmax(int array[], int *length)
 {
 	int i=0;
 	int max=0;
-	for(i=0; i<*length; i++)
+	for(i=0; i<*length; i++) //finds max value in array
 	{
 		if(array[i]>max)
 			max=array[i];
@@ -88,16 +89,16 @@ int getmax(int array[], int *length)
 	return max;
 }
 
-int write_stats(double mean, int max, )
+void write_stats(char* file, int array[], int* length)
 {
 	FILE* fp=fopen(file,"w");
 		//opens the given input file for reading
 
-		if(fp==NULL){//making sure the input file opens correctly
-			printf("Error opening input file");
-			return 0;
-			//terminates program
-			}
+		if(fp==NULL)//making sure the input file exists
+		{
+			freopen(file, "w", fp);
+		}
 
-
+	fprintf(fp, "%d %d", getmean(array, length), getmax(array, length)); //writes to file
+	return 0;
 }
