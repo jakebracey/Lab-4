@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 int main(void) {
+	printf("In text editor");
 	int file_sel;
 	char file_name[16];
 	printf("Which file would you like to open(ex. 1, 10, etc.:\n");
