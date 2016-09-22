@@ -9,6 +9,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 int *load_array(char* file,int* length, int* max_val);
+double *do_offset(int* array,int* length,char*file);
+double *do_scale(int* array,int* length,char*file);
 double getmean(int[], int*);
 int getmax(int[], int*);
 void write_stats(char[], int[], int*);
@@ -22,7 +24,9 @@ int main(void) {
 	char offset_file[19];
 	char scaled_file[19];
 	int* array;
+	double* array_changed;
 	int off_or_scale;
+
 	
 	//gets file choice from user
 	printf("Which file would you like to open:\n");
@@ -52,7 +56,7 @@ int main(void) {
 	array=load_array(file_name, length, max_val);
 	
 	//part of code to either offset or scale
-	printf("Would you like to\n1:offset the original signal\n2:Scale the original signal\n");
+	printf("Enter if you would like to\n(1) Offset the original signal\n(2) Scale the original signal\n");
 	scanf("%d",&off_or_scale);
 	if(off_or_scale<1||off_or_scale>11){
 		while(off_or_scale<1||off_or_scale>11){
@@ -60,10 +64,71 @@ int main(void) {
 			scanf("%d", &off_or_scale);
 		}
 	}
-	
+	if(off_or_scale==1){
+		array_changed=do_offset(array,length,offset_file);
+	}
+	else{
+		array_changed=do_scale(array, length, scaled_file);
+	}
 	
 	write_stats(stat_file, array, length); //writes stats to file
+	
+	free(array);
+	free(array_changed);
+	
 }//end of main
+
+double *do_offset(int* array,int* length,char* file){
+	double val;
+	double* array_changed=malloc(sizeof(double)**length);
+	printf("Enter the factor that you would like to offset the data samples by:\n");
+	scanf("%lf", &val);
+	int i;
+	for(i=0;i<*length;i++){
+		*(array_changed+i)=(double)(*(array+i)+val);
+	}
+	
+	//this part of the function writes the output to the given output file
+	FILE* fp=fopen(file,"w");
+		//opens the given input file for reading
+
+		if(fp==NULL)//making sure the input file exists
+		{
+			freopen(file, "w", fp);
+		}
+	fprintf(fp,"%d %.4lf\n",*length, val);	
+	for(i=0;i<*length;i++){
+		fprintf(fp,"%.4lf\n",*(array_changed+i));
+	}
+	fclose(fp);
+	return array_changed;
+}
+
+double *do_scale(int* array,int* length,char* file){
+	double val;
+	double* array_changed=malloc(sizeof(double)**length);
+	printf("Enter the factor that you would like to scale the data samples by:\n");
+	scanf("%lf", &val);
+	int i;
+	for(i=0;i<*length;i++){
+		*(array_changed+i)=(double)(*(array+i)*val);
+	}
+	
+	//this part of the function writes the output to the given output file
+	FILE* fp=fopen(file,"w");
+		//opens the given input file for reading
+
+		if(fp==NULL)//making sure the input file exists
+		{
+			freopen(file, "w", fp);
+		}
+	fprintf(fp,"%d %.4lf\n",*length, val);	
+	for(i=0;i<*length;i++){
+		fprintf(fp,"%.4lf\n",*(array_changed+i));
+	}
+	fclose(fp);
+	return array_changed;
+}
 
 
 int *load_array(char* file,int* length, int* max_val){
@@ -86,6 +151,7 @@ int *load_array(char* file,int* length, int* max_val){
 	//for loop to put the values into the array
 		fscanf(fp, "%d", (array+i));
 	}
+	fclose(fp);
 	return array;
 }
 
@@ -129,5 +195,5 @@ void write_stats(char* file, int array[], int* length)
 
 
 	fprintf(fp, "%d %d", getmean(array, length), getmax(array, length)); //writes to file
-	return 0;
+	return ;
 }
