@@ -18,6 +18,9 @@ int main(void) {
 	int* length=malloc(sizeof(int));
 	int* max_val=malloc(sizeof(int));
 	char file_name[16];
+	int* array;
+	
+	
 	printf("Which file would you like to open:\n");
 	scanf("%d",&file_sel);
 	if(file_sel<1||file_sel>11){
@@ -32,8 +35,8 @@ int main(void) {
 	else{
 	sprintf(file_name,"Raw_data_%d.txt",file_sel);	
 	}
-printf("%s",file_name);
-
+	
+	array=load_array(file_name, length, max_val);
 }
 int *load_array(char* file,int* length, int* max_val){
 	FILE* fp=fopen(file,"r");
@@ -54,7 +57,8 @@ int *load_array(char* file,int* length, int* max_val){
 	for(i=0;i<*length;i++){
 	//for loop to put the values into the array
 		fscanf(fp, "%d", (array+i));
-}
+	}
+	return array;
 }
 double getmean(int* array,int *length)
 {
