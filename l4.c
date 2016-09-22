@@ -11,6 +11,8 @@
 int *load_array(char* file,int* length);
 
 
+double mean(int[]);
+
 int main(void) {
 	int file_sel;
 	char file_name[16];
@@ -29,8 +31,10 @@ int main(void) {
 	sprintf(file_name,"Raw_data_%d",file_sel);	
 	}
 
+
 }
 
+<<<<<<< HEAD
 int *load_array(char* file,int* length){
 	FILE* fp=fopen(file,"r");
 	//opens the given input file for reading
@@ -43,3 +47,19 @@ int *load_array(char* file,int* length){
 	
 	fscanf(fp, "%d %d",);
 }
+=======
+double mean(int* array, length);
+{
+	int i=0;
+	int add=0;
+	double mean=0;
+	for(i=0, i<length, i++)
+	{
+		add+=array[i];
+	}
+	mean=(double)add / length;
+	return mean;
+}
+
+
+>>>>>>> b6efc6ab953315610a0d7f01c81a267afa53ad2f
