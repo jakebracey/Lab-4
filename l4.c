@@ -8,34 +8,34 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-int *load_array(char* file,int* length);
+int *load_array(char* file,int* length, int* max_val);
 
 
 double mean(int[]);
 
 int main(void) {
 	int file_sel;
+	int* length=malloc(sizeof(int));
+	int* max_val=malloc(sizeof(int));
 	char file_name[16];
-	printf("Which file would you like to open(ex. 1, 10, etc.:\n");
+	printf("Which file would you like to open:\n");
 	scanf("%d",&file_sel);
 	if(file_sel<1||file_sel>11){
 		while(file_sel<1||file_sel>11){
-			printf("Available files are files 01-11\nPlease enter a valid file number:\n");
-			scanf("%d, &file_sel");
+			printf("Available files are files 1-11\nPlease enter a valid file number:\n");
+			scanf("%d", &file_sel);
 		}
 	}
 	if(file_sel<10){
-	sprintf(file_name,"Raw_data_0%d",file_sel);
+	sprintf(file_name,"Raw_data_0%d.txt",file_sel);
 	}
 	else{
-	sprintf(file_name,"Raw_data_%d",file_sel);	
+	sprintf(file_name,"Raw_data_%d.txt",file_sel);	
 	}
-
+printf("%s",file_name);
 
 }
-
-<<<<<<< HEAD
-int *load_array(char* file,int* length){
+int *load_array(char* file,int* length, int* max_val){
 	FILE* fp=fopen(file,"r");
 	//opens the given input file for reading
 	
@@ -45,21 +45,27 @@ int *load_array(char* file,int* length){
 		//terminates program
 		}
 	
-	fscanf(fp, "%d %d",);
+	fscanf(fp, "%d %d",length, max_val);
+	
+	int* array=malloc(sizeof(int)**length);
+	//mallocs space for the array
+	
+	int i=0;
+	for(i=0;i<*length;i++){
+	//for loop to put the values into the array
+		fscanf(fp, "%d", (array+i));
 }
-=======
-double mean(int* array, length);
+}
+double getmean(int* array,int *length)
 {
 	int i=0;
 	int add=0;
 	double mean=0;
-	for(i=0, i<length, i++)
+	for(i=0;i<*length;i++)
 	{
 		add+=array[i];
 	}
-	mean=(double)add / length;
+	mean=(double)add / *length;
 	return mean;
 }
 
-
->>>>>>> b6efc6ab953315610a0d7f01c81a267afa53ad2f
