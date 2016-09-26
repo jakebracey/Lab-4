@@ -36,8 +36,7 @@ int main(void) {
 	scanf("%d", &file_sel);
 	if (file_sel < 1 || file_sel > 11) {
 		while (file_sel < 1 || file_sel > 11) {
-			printf(
-					"Available files are files 1-11\nPlease enter a valid file number:\n");
+			printf("Available files are files 1-11\nPlease enter a valid file number:\n");
 			scanf("%d", &file_sel);
 		}
 	}
@@ -63,13 +62,11 @@ int main(void) {
 	array = load_array(file_name, length, max_val);
 
 	//part of code to either offset or scale
-	printf(
-			"Enter if you would like to\n(1) Offset the original signal\n(2) Scale the original signal\n");
+	printf("Enter if you would like to\n(1) Offset the original signal\n(2) Scale the original signal\n");
 	scanf("%d", &off_or_scale);
-	if (off_or_scale < 1 || off_or_scale > 11) {
-		while (off_or_scale < 1 || off_or_scale > 11) {
-			printf(
-					"Invalid choice\nWould you like to\n1:offset the original signal\n2:Scale the original signal\n");
+	if (off_or_scale < 1 || off_or_scale > 2) {
+		while (off_or_scale < 1 || off_or_scale > 2) {
+			printf("Enter if you would like to\n(1) Offset the original signal\n(2) Scale the original signal\n");
 			scanf("%d", &off_or_scale);
 		}
 	}
@@ -91,8 +88,7 @@ int main(void) {
 double *do_offset(int* array, int* length, char* file) {
 	double val;
 	double* array_changed = malloc(sizeof(double) * *length);
-	printf(
-			"Enter the factor that you would like to offset the data samples by:\n");
+	printf("Enter the factor that you would like to offset the data samples by:\n");
 	scanf("%lf", &val);
 	int i;
 	for (i = 0; i < *length; i++) {
@@ -118,8 +114,7 @@ double *do_offset(int* array, int* length, char* file) {
 double *do_scale(int* array, int* length, char* file) {
 	double val;
 	double* array_changed = malloc(sizeof(double) * *length);
-	printf(
-			"Enter the factor that you would like to scale the data samples by:\n");
+	printf("Enter the factor that you would like to scale the data samples by:\n");
 	scanf("%lf", &val);
 	int i;
 	for (i = 0; i < *length; i++) {
