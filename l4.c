@@ -21,14 +21,20 @@ int main(void) {
 	int file_sel;
 	int* length = malloc(sizeof(int));
 	int* max_val = malloc(sizeof(int));
+	
+	//defines all of our file name strings
 	char file_name[16];
 	char stat_file[23];
 	char offset_file[19];
 	char scaled_file[19];
 	char center_file[22];
 	char normal_file[23];
+	
+	//defines strings for our data 
 	int* array;
 	double* array_changed;
+	
+	//variable to choose which operation to do on the input data
 	int off_or_scale;
 
 	//gets file choice from user
@@ -70,29 +76,31 @@ int main(void) {
 			scanf("%d", &off_or_scale);
 		}
 	}
-	if (off_or_scale == 1) {
+	if (off_or_scale == 1) {//if they select 1 then the offset function is called
 		array_changed = do_offset(array, length, offset_file);
-	} else {
+	} else {//if they select 2 then the scale function is called
 		array_changed = do_scale(array, length, scaled_file);
 	}
 
-	write_stats(stat_file, array, length); //writes stats to file
+	write_stats(stat_file, array, length); //writes stats to file, inside this function the average and max functions are called
 	do_center(array, length, center_file); //writes centered values to file
 	do_normal(array, length, normal_file); //writes normalized values to file
 
+	//frees the memory we allocated for our strings. 
 	free(array);
 	free(array_changed);
 
 } //end of main
 
 double *do_offset(int* array, int* length, char* file) {
+	//function to offset all of the data points
 	double val;
-	double* array_changed = malloc(sizeof(double) * *length);
+	double* array_changed = malloc(sizeof(double) * *length);//mallocs a string to put our altered values in
 	printf("Enter the factor that you would like to offset the data samples by:\n");
 	scanf("%lf", &val);
 	int i;
-	for (i = 0; i < *length; i++) {
-		*(array_changed + i) = (double) (*(array + i) + val);
+	for (i = 0; i < *length; i++) {//goes through every term in the array
+		*(array_changed + i) = (double) (*(array + i) + val);//adds the value to every term
 	}
 
 	//this part of the function writes the output to the given output file
@@ -112,8 +120,9 @@ double *do_offset(int* array, int* length, char* file) {
 }
 
 double *do_scale(int* array, int* length, char* file) {
+	//funciton to scale all of the input data points
 	double val;
-	double* array_changed = malloc(sizeof(double) * *length);
+	double* array_changed = malloc(sizeof(double) * *length);//mallocs a string to put our altered values in
 	printf("Enter the factor that you would like to scale the data samples by:\n");
 	scanf("%lf", &val);
 	int i;
@@ -138,6 +147,7 @@ double *do_scale(int* array, int* length, char* file) {
 }
 
 void do_center(int array[], int* length, char* file)
+//function to center all of the data points and then output those points to an output file
 {
 	int i;
 	double val, mean;
@@ -163,8 +173,8 @@ void do_center(int array[], int* length, char* file)
 	return;
 }
 
-void do_normal(int array[], int* length, char* file)
-{
+void do_normal(int array[], int* length, char* file){
+	//funciton to normalize the array and then put those values in an output file
 	int i, max;
 	double val;
 	double* array_changed = malloc(sizeof(double)* *length); //mallocs space for array
@@ -190,6 +200,7 @@ void do_normal(int array[], int* length, char* file)
 }
 
 int *load_array(char* file, int* length, int* max_val) {
+	//function to load the data from the input file in the array
 	FILE* fp = fopen(file, "r");
 	//opens the given input file for reading
 
@@ -214,6 +225,7 @@ int *load_array(char* file, int* length, int* max_val) {
 }
 
 double getmean(int array[], int *length) {
+	//function to find the average of all the data points in the input file
 	int i = 0;
 	int add = 0;
 	double mean = 0;
@@ -226,6 +238,7 @@ double getmean(int array[], int *length) {
 }
 
 int getmax(int array[], int *length) {
+	//funciton to find the maximum value in the data set
 	int i = 0;
 	int max = 0;
 	for (i = 0; i < *length; i++) //finds max value in array
@@ -237,6 +250,7 @@ int getmax(int array[], int *length) {
 }
 
 void write_stats(char* file, int array[], int* length) {
+	//function to write the average and maximum value in a output file
 	FILE* fp = fopen(file, "w");
 	//opens the given input file for reading
 
@@ -244,7 +258,7 @@ void write_stats(char* file, int array[], int* length) {
 	{
 		freopen(file, "w", fp);
 	}
-
+	//calls the mean and max function all in the fprintf function
 	fprintf(fp, "%.02f %d", getmean(array, length), getmax(array, length)); //writes to file
 	fclose(fp);
 	return;
