@@ -40,8 +40,8 @@ int main(void) {
 	//gets file choice from user
 	printf("Which file would you like to open:\n");
 	scanf("%d", &file_sel);
-	if (file_sel < 1 || file_sel > 11) {
-		while (file_sel < 1 || file_sel > 11) {
+	if (file_sel < 1 || file_sel > 15) {
+		while (file_sel < 1 || file_sel > 15) {
 			printf("Available files are files 1-11\nPlease enter a valid file number:\n");
 			scanf("%d", &file_sel);
 		}
