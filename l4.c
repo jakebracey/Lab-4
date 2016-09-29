@@ -38,7 +38,7 @@ int main(void) {
 	int off_or_scale;
 
 	//gets file choice from user
-	printf("Which file would you like to open:\n");
+	printf(" Which file would you like to open:\n");
 	scanf("%d", &file_sel);
 	if (file_sel < 1 || file_sel > 15) {
 		while (file_sel < 1 || file_sel > 15) {
